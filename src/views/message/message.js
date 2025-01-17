@@ -55,9 +55,8 @@ function getMessList(id) {
 
     function messageAdd(data, isMess = true) {
         const mess = isMess ? '留言' : '评论'
-        data['ip'] = window._DEFAULT_CITY.ip
-        data['address'] = window._DEFAULT_CITY.nation + '-' + window._DEFAULT_CITY.province + '-' + window._DEFAULT_CITY.city
-        http.post("/apis/message/add", data)
+        data["parent"] = 0
+        http.post("/api/admin/message/add", data)
             .then(function(res) {
                 message.success(`${mess}成功！`);
                 if (list.value.length % 20 == 0) {

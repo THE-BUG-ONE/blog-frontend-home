@@ -56,7 +56,7 @@ export default {
       },
       length:{
           type:Number,
-          default:300
+          default:255
       },
     //   isLogin:{
     //       type:Boolean,

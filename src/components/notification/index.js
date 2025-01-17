@@ -8,7 +8,7 @@ const createMessage = {
         duration: 3,
         maxCount: null,
         getContainer: document.body,
-        placement: 'topRight',
+        placement: 'bottomRight',
         closeIcon: null,
     },
     default: {

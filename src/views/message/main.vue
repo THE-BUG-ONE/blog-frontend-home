@@ -61,7 +61,7 @@ export default {
     const submit=(content)=>{
         const data={
             message:content,
-            article_id:0
+            parentId:0
         }
         messageAdd(data)
     }
