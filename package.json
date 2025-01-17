@@ -1,0 +1,44 @@
+{
+    "name": "vue-blog3-blog",
+    "version": "1.1.0",
+    "private": true,
+    "scripts": {
+        "dev_home": "vite --mode home_dev",
+        "build_home": "vite build --mode home_pro",
+        "preview_home": "vite preview --mode home_pro",
+        "dev_admin": "vite --mode admin_dev",
+        "build_admin": "vite build --mode admin_pro",
+        "preview_admin": "vite preview --mode admin_pro"
+    },
+    "dependencies": {
+        "@ant-design/icons-vue": "^6.1.0",
+        "@kangc/v-md-editor": "^2.1.7",
+        "axios": "^0.21.4",
+        "core-js": "^3.22.3",
+        "dompurify": "^2.3.6",
+        "echarts": "^5.4.2",
+        "element-plus": "^2.9.2",
+        "highlight.js": "^11.11.1",
+        "js-cookie": "^3.0.5",
+        "marked": "^2.1.3",
+        "pinia": "^2.0.28",
+        "pinia-plugin-persistedstate": "^2.4.0",
+        "throttle-debounce": "^3.0.1",
+        "vue": "^3.2.45",
+        "vue-echarts": "^6.5.4",
+        "vue-router": "^4.1.6",
+        "vuex": "^4.0.2",
+        "vuex-persistedstate": "^4.1.0"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-vue": "^4.1.0",
+        "stylus": "^0.54.8",
+        "stylus-loader": "^3.0.2",
+        "vite": "^4.0.1"
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not dead"
+    ]
+}
