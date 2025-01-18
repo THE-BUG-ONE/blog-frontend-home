@@ -3,12 +3,11 @@
     <template #actions>
       <div class="actions">
         <span class="time">{{ formatDate(item.createTime) }}</span>
-        <span>{{ formatAddress(item.address) }}</span>
         <MessageOutlined class="reply" @click="show('message', item.id)" />
         <DeleteOutlined
           class="delete"
           v-if="
-            (user.id == item.user.id && user.id > 0) || user.is_admin == 1
+            (user.id == item.user.id && user.id > 0) || user.roles.includes('admin')
           "
           @click="deleteMess('message', item.id)"
         />
@@ -36,23 +35,22 @@
     <template #content>
       <Preview :content="format(item.message)" />
     </template>
-    <template v-if="item.reply&&item.reply.length">
-      <MessCard v-for="item of item.reply" :key="'reply' + item.id" class="message-list-card" style="padding:0;margin:0;">
+    <template v-if="replyList&&replyList.length">
+      <MessCard v-for="item of replyList" :key="'reply' + item.id" class="message-list-card" style="padding:0;margin:0;">
         <template #actions>
           <div class="actions">
             <span class="time">{{ formatDate(item.createTime) }}</span>
-            <span>{{ formatAddress(item.address) }}</span>
             <MessageOutlined class="reply" @click="show('reply', item.id)" />
             <DeleteOutlined
               class="delete"
               v-if="
-                (user.id == item.user.id && user.id > 0) || user.is_admin == 1
+                (user.id == item.user.id && user.id > 0) || user.roles.includes('admin')
               "
               @click="deleteMess('reply', item.id)"
             />
           </div>
           <Comment
-            @submit="reply($event, item.id)"
+            @submit="reply($event, item.id, item.fromUser.id)"
             v-if="commentID == 'reply' + item.id && commentShow"
           ></Comment>
         </template>
@@ -72,11 +70,11 @@
           </Image>
         </template>
         <template #content>
-          <p class="mess-reply"  v-if="item.mess_reply[0]">
-            <span>回复@{{item.mess_reply[0].user.name}}</span>
-            <Preview :content="format(item.mess_reply[0].reply)" />
+          <p class="mess-reply" v-if="item.parentId !== 0">
+            <span>回复@{{item.fromUser.nickname}}</span>
+            <!-- <Preview :content="format(item.mess_reply[0].reply)" /> -->
           </p> 
-          <Preview :content="format(item.reply)" /> 
+          <Preview :content="format(item.message)" /> 
         </template>
       </MessCard>
     </template>
@@ -95,6 +93,7 @@ import { useStore } from "vuex";
 export default {
   props: {
     item: Object,
+    replyList: []
   },
   components: {
     MessCard,
@@ -128,14 +127,13 @@ export default {
       console.log(content);
       return content.replace(/#(.){0,8}?;/gi, emotion);
     };
-    const reply = (cont, id) => {
+    const reply = (cont, id, fromId) => {
       const info = {
-        mess_id: props.item.id,
-        reply: cont,
+        rootId: props.item.id,
+        message: cont,
       };
-      if (id) {
-        info["mess_reply_id"] = id;
-      }
+      info["parentId"] = id ? id : 0
+      info["fromUserId"] = fromId ? fromId : 0
       context.emit("reply", info);
       console.log(info);
       // replyAdd(info);
@@ -179,13 +177,6 @@ export default {
       }
       return result;
     };
-    const formatAddress = (address) => {
-      if (!address) return;
-      let adds = address.split("-");
-      let province = adds[1].split("省")[0];
-      let city = adds[2].split("市")[0];
-      return `${province} • ${city}`;
-    };
     return {
       format,
       commentID,
@@ -194,7 +185,6 @@ export default {
       reply,
       deleteMess,
       formatDate,
-      formatAddress,
       user,
     };
   },
@@ -211,8 +201,8 @@ export default {
     border-radius: 4px;
   }
   .mess-reply{
-    color #3da8f5
-    border 2px solid  rgba(246 ,248 ,249, .8)
+    color: #636b6f
+    border: 2px solid  rgba(246 ,248 ,249, .8)
     background rgba(255,255,255,.4)
     padding: 4px 6px;
     border-radius: 10px;

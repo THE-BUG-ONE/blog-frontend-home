@@ -32,9 +32,7 @@ function getMessList(id) {
     }
 
     function replyAdd(data) {
-        data['ip'] = window._DEFAULT_CITY.ip
-        data['address'] = window._DEFAULT_CITY.nation + '-' + window._DEFAULT_CITY.province + '-' + window._DEFAULT_CITY.city
-        http.post("/apis/user/reply/add", data)
+        http.post("/api/admin/message/add", data)
             .then(function(res) {
                 message.success(`回复成功！`);
                 for (let i = 0, len = list.value.length; i < len; i++) {
@@ -55,7 +53,7 @@ function getMessList(id) {
 
     function messageAdd(data, isMess = true) {
         const mess = isMess ? '留言' : '评论'
-        data["parent"] = 0
+        data["parentId"] = 0
         http.post("/api/admin/message/add", data)
             .then(function(res) {
                 message.success(`${mess}成功！`);
@@ -80,6 +78,7 @@ function getMessList(id) {
                 message.success(`删除成功！`);
             });
     }
+
     return {
         current_page,
         last_page,
@@ -88,7 +87,7 @@ function getMessList(id) {
         getMess,
         messageAdd,
         replyAdd,
-        deleteMess
+        deleteMess,
     }
 }
 

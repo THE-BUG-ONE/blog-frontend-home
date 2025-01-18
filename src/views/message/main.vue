@@ -10,16 +10,16 @@
           <Skeleton v-for="item of 3" :key="'Skeleton'+item" :class="'message-list-item-bg-'+(item+1)%4"  class="concise" avatar active></Skeleton>
         </div>
         <template v-else>
-        <MessageCard @reply="reply" @delete="deleteMess" :item="item"  v-for="(item,index) of listItem.left" :key="item.id" class="message-list-card" :class="'message-list-item-bg-'+(index+1)%4"></MessageCard>
+          <MessageCard @reply="reply" @delete="deleteMess" :item="item" :replyList="getReplyList(item.id)" v-for="(item,index) of listItem.left" :key="item.id" class="message-list-card" :class="'message-list-item-bg-'+(index+1)%4"></MessageCard>
         </template>
         
       </div>
       <div class="right">
-         <template v-if="loading">
+        <template v-if="loading">
           <Skeleton v-for="item of 3" :key="'Skeleton'+item" :class="'message-list-item-bg-'+(item+1)%4"  class="concise" avatar active></Skeleton>
         </template>
         <template v-else>
-          <MessageCard @reply="reply" @delete="deleteMess" :item="item" v-for="(item,index) of listItem.right" :key="item.id" class="message-list-card" :class="'message-list-item-bg-'+(index+1)%4"></MessageCard>
+          <MessageCard @reply="reply" @delete="deleteMess" :item="item" :replyList="getReplyList(item.id)" v-for="(item,index) of listItem.right" :key="item.id" class="message-list-card" :class="'message-list-item-bg-'+(index+1)%4"></MessageCard>
         </template>
         
       </div>
@@ -33,6 +33,7 @@ import Comment from "./comment";
 import { getMessList } from "./message";
 import MessageCard from "./message-card";
 import Skeleton from "@/components/skeleton/skeleton";
+import { ref } from 'vue';
 export default {
   name: "Message",
   components: {
@@ -45,11 +46,12 @@ export default {
     const listItem = computed(() => {
       const left = [];
       const right = [];
-      for (let i = 0, leng = list.value.length; i < leng; i++) {
+      const messageList = ref(list.value.filter(message => message.rootId === 0))
+      for (let i = 0, leng = messageList.value.length; i < leng; i++) {
         if ((i + 1) % 2) {
-          left.push(list.value[i]);
+          left.push(messageList.value[i]);
         } else {
-          right.push(list.value[i]);
+          right.push(messageList.value[i]);
         }
       }
       return {
@@ -58,15 +60,20 @@ export default {
       };
     });
     getMess();
-    const submit=(content)=>{
-        const data={
-            message:content,
-            parentId:0
-        }
-        messageAdd(data)
+    const getReplyList = (id) => {
+      const replyList = list.value.filter(message => message.rootId === id)
+      console.log(replyList)
+      return replyList
     }
-    const reply=(content)=>{
-        replyAdd(content)
+    const submit=(content)=>{
+      const data={
+        message:content,
+        parentId:0
+      }
+      messageAdd(data)
+    }
+    const reply=(data)=>{
+      replyAdd(data)
     }
     return {
       listItem,
@@ -76,7 +83,8 @@ export default {
       reply,
       deleteMess,
       current_page,
-      last_page
+      last_page,
+      getReplyList
     };
   },
 };
