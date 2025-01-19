@@ -4,14 +4,15 @@ const { resolve } = require("path");
 // https://vitejs.dev/config/
 export default ({ mode }) => {
   const env=loadEnv(mode, process.cwd())
-  const app_ip = env.VITE_API_HOST_IP;
-  const isDev=mode=='development'
   const app_host = env.VITE_APP_API_URL;
   let pageName = env.VITE_PAGE_NAME
   let pageRoot=env.VITE_PAGE_ROOT
   console.log('页面名称',pageName)
   console.log('页面人口',pageRoot)
   return defineConfig({
+    define: {
+      'process.env': env
+    },
     plugins: [
       vue(),
     ],

@@ -170,7 +170,7 @@ export default {
     }
     const partyLogin = (type) => {
       let githubUrl =
-        import.meta.env.VITE_APP_API_URL + "/login/" + type + "/redirect";
+        process.env.VITE_APP_API_URL + "/login/" + type + "/redirect";
       window.location.href = githubUrl;
       localStorage.setItem("current_page", route.path);
     };

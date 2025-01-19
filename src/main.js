@@ -37,5 +37,5 @@ app.use(router)
 app.use(InfiniteScroll)
 app.config.globalProperties.$get = http.get
 app.config.globalProperties.$post = http.post
-http.defaults.baseURL = import.meta.env.VUE_APP_URL;
+http.defaults.baseURL = process.env.VITE_APP_HOME_URL;
 app.mount('#app')

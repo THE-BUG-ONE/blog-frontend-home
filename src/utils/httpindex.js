@@ -3,7 +3,7 @@ import store from '../store/index'
 import Notification from '@/components/notification/index.js';
 import { getToken } from '@/utils/auth.js';
 var instance = axios.create({
-    baseURL: import.meta.env.VITE_APP_API_URL,
+    baseURL: process.env.VITE_APP_API_URL,
     timeout: 10000,
 });
 // 添加请求拦截器

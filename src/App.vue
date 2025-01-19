@@ -37,7 +37,7 @@
                   {{ item.tag }}
                 </router-link>
             </template>
-            <a href="/admin" target="_blank" class="user-opera" v-if="true || userInfo.roles.some(role => ['admin','user'].includes(role))" >管理后台</a>
+            <a :href="sysUrl" target="_blank" class="user-opera" v-if="userInfo && userInfo.roles.some(role => ['admin','user'].includes(role))" >管理后台</a>
             <span class="user-opera" v-if="user" @click="logOut">退出登录</span>
           </template>
         </DropDown>
@@ -103,6 +103,8 @@ export default {
   setup() {
   const route=useRoute()
   console.log(route)
+  const sysUrl = process.env.VITE_APP_SYS_URL;
+  console.log(sysUrl)
     const nav =reactive( {
       normal: {
           "background-color": "#fff",
@@ -168,7 +170,7 @@ export default {
       return false
     });
     const userInfo = computed(() => store.state.user.user);
-    console.log(store.state.user)
+    console.log(userInfo.value)
     const userOperation =[
         {
           tag: "个人信息",
@@ -203,7 +205,8 @@ export default {
       user,
       userInfo,
       userOperation,
-      nav
+      nav,
+      sysUrl
     };
   },
 };

@@ -168,8 +168,8 @@ export default {
     const imgSrc=ref('')
     const imgList=ref([])
     const url=computed(()=>{
-      console.log(import.meta.env)
-      const url=import.meta.env.VITE_APP_HOME_URL+'/article/'+route.params.id
+      const url=process.env.VITE_APP_HOME_URL+'/article/'+route.params.id
+      console.log(url)
       return url
     })
     const options = {
