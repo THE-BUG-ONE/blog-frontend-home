@@ -149,7 +149,7 @@
           <Skeleton v-if="classLoading" active></Skeleton>
         </div>
         <div class="label concise">
-          <el-tag v-for="item in labelList" :key="item.id" class="tag">
+          <el-tag v-for="item in labelList" :key="item.id" class="tag" round>
             {{ item.tagName + " | " + item.articleCount }}
           </el-tag>
           <Skeleton v-if="labelLoading" active></Skeleton>

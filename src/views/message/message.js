@@ -28,31 +28,34 @@ function getMessList(id) {
                     console.log(list.value)
                 })
         }
-
     }
 
     function replyAdd(data) {
         http.post("/api/admin/message/add", data)
             .then(function(res) {
                 message.success(`回复成功！`);
-                for (let i = 0, len = list.value.length; i < len; i++) {
-                    if (list.value[i].id == data.mess_id) {
-                        // bug:当列表回复为空时！不能添加的回复列表
-                        if (!list.value[i]['reply']) {
-                            list.value[i]['reply'] = []
-                        }
-                        console.log(list.value[i]['reply'])
-                        list.value[i].reply.push(res.data)
-                        break
-                    }
+                // for (let i = 0, len = list.value.length; i < len; i++) {
+                //     if (list.value[i].id == data.mess_id) {
+                //         // bug:当列表回复为空时！不能添加的回复列表
+                //         if (!list.value[i]['reply']) {
+                //             list.value[i]['reply'] = []
+                //         }
+                //         console.log(list.value[i]['reply'])
+                //         list.value[i].reply.push(res.data)
+                //         break
+                //     }
+                // }
+                if (list.value.length % 20 == 0) {
+                    list.value.pop()
                 }
+                list.value.unshift(res.data)
             }).catch(() => {
                 message.error(`回复失败！`);
             })
     }
 
     function messageAdd(data, isMess = true) {
-        const mess = isMess ? '留言' : '评论'
+        const mess = isMess ? '留言' : '回复'
         data["parentId"] = 0
         http.post("/api/admin/message/add", data)
             .then(function(res) {
@@ -68,8 +71,8 @@ function getMessList(id) {
     }
 
     function deleteMess(info) {
-        http.post("/apis/user/" + info.type + "/remove", {
-                id: info.id,
+        http.delete("/api/admin/message/delete",{
+                data: [info.id]
             })
             .then(function() {
                 message.success(`删除成功！`);

@@ -4,14 +4,9 @@
             <div class="foot-row service">
                 <p class="title">记录美好学习时光，分享学习点点滴滴</p>
                     <ul class="link">
-                        <li><router-link to="/link">友链</router-link></li>
-
-                        <li><router-link to="/route">成长</router-link></li>
-
                         <li><router-link to="/message">留言</router-link></li>
-
+                        <li><router-link to="/link">友链</router-link></li>
                         <li><router-link to="/article">博客</router-link></li>
-
                         <li><router-link to="/">主页</router-link></li>
                     </ul>
             </div>

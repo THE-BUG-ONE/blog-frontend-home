@@ -98,7 +98,7 @@ export default {
     },
     logOut() {
       this.$store.dispatch('logOut')
-    }
+    },
   },
   setup() {
   const route=useRoute()

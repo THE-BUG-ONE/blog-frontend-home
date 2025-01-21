@@ -35,8 +35,8 @@
     <template #content>
       <Preview :content="format(item.message)" />
     </template>
-    <template v-if="replyList&&replyList.length">
-      <MessCard v-for="item of replyList" :key="'reply' + item.id" class="message-list-card" style="padding:0;margin:0;">
+    <template v-if="replyList.value&&replyList.value.length">
+      <MessCard v-for="item in replyList.value" :key="'reply' + item.id" class="message-list-card" style="padding:0;margin:0;">
         <template #actions>
           <div class="actions">
             <span class="time">{{ formatDate(item.createTime) }}</span>
@@ -50,7 +50,7 @@
             />
           </div>
           <Comment
-            @submit="reply($event, item.id, item.fromUser.id)"
+            @submit="reply($event, item.id, item.user.id)"
             v-if="commentID == 'reply' + item.id && commentShow"
           ></Comment>
         </template>
@@ -71,7 +71,7 @@
         </template>
         <template #content>
           <p class="mess-reply" v-if="item.parentId !== 0">
-            <span>回复@{{item.fromUser.nickname}}</span>
+            <span v-if="item.fromUser">回复@{{ item.fromUser.nickname }}</span>
             <!-- <Preview :content="format(item.mess_reply[0].reply)" /> -->
           </p> 
           <Preview :content="format(item.message)" /> 
@@ -93,7 +93,7 @@ import { useStore } from "vuex";
 export default {
   props: {
     item: Object,
-    replyList: []
+    replyList: Object
   },
   components: {
     MessCard,
@@ -104,6 +104,7 @@ export default {
     DeleteOutlined,
   },
   setup(props, context) {
+    console.log(props.replyList.value)
     const commentID = ref("");
     const commentShow = ref(false);
     const store = useStore();

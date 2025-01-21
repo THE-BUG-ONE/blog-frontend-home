@@ -42,7 +42,7 @@ export default {
     Skeleton
   },
   setup() {
-    const { list, getMess,loading ,current_page,last_page,messageAdd,replyAdd,deleteMess} = getMessList(0);
+    const { list,getMess,loading,current_page,last_page,messageAdd,replyAdd,deleteMess} = getMessList(0);
     const listItem = computed(() => {
       const left = [];
       const right = [];
@@ -61,14 +61,15 @@ export default {
     });
     getMess();
     const getReplyList = (id) => {
-      const replyList = list.value.filter(message => message.rootId === id)
-      console.log(replyList)
+      const replyList = ref(list.value.filter(message => message.rootId === id))
       return replyList
     }
     const submit=(content)=>{
       const data={
         message:content,
-        parentId:0
+        parentId:0,
+        rootId:0,
+        fromUserId:0
       }
       messageAdd(data)
     }

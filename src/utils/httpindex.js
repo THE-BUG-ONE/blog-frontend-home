@@ -10,7 +10,6 @@ var instance = axios.create({
 instance.interceptors.request.use(function(config) {
     // 在发送请求之前做些什么
     console.log(config.url)
-    console.log(getToken())
     if (config.url === '/api/logout' || config.url.startsWith('/api/admin')) {
         config.headers['Authorization'] = getToken()
         console.log(config.headers['Authorization'])
