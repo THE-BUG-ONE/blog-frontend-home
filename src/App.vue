@@ -15,7 +15,7 @@
           :src="
               userInfo
                 ? userInfo.avatar
-                : 'https://bit-images.bj.bcebos.com/bit-new/file/20210323/4inn.png'
+                : 'https://media.fgo.wiki/thumb/f/f9/%E7%8E%89%E8%97%BB%E5%89%8D%E6%84%9A%E4%BA%BA%E8%8A%82%E7%AB%8B%E7%BB%98.png/424px-%E7%8E%89%E8%97%BB%E5%89%8D%E6%84%9A%E4%BA%BA%E8%8A%82%E7%AB%8B%E7%BB%98.png'
             "
             class="avatar">
             
@@ -38,7 +38,7 @@
                 </router-link>
             </template>
             <a :href="sysUrl" target="_blank" class="user-opera" v-if="userInfo && userInfo.roles.some(role => ['admin','user'].includes(role))" >管理后台</a>
-            <span class="user-opera" v-if="user" @click="logOut">退出登录</span>
+            <span class="user-opera" v-if="user" @click="logout">退出登录</span>
           </template>
         </DropDown>
       </template>
@@ -96,8 +96,8 @@ export default {
     login() {
       this.$store.commit("showLogin")
     },
-    logOut() {
-      this.$store.dispatch('logOut')
+    logout() {
+      this.$store.dispatch('logout')
     },
   },
   setup() {
@@ -241,6 +241,7 @@ export default {
         box-sizing: border-box;
         border-radius: 50%;
         color: #c4c4c4;
+        object-fit: cover;
       }
     }
 

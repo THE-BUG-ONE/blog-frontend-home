@@ -1,7 +1,7 @@
 import http from "@/utils/httpindex.js";
 import Notification from "@/components/notification/index.js";
 import { h } from "vue";
-import { getToken, setToken } from '@/utils/auth.js'
+import { getToken, setToken, removeToken } from '@/utils/auth.js'
 const user = {
   state: {
     user: "",
@@ -24,7 +24,7 @@ const user = {
         }),
       });
     },
-    logOut(state) {
+    logout(state) {
       //退出
       console.log(state.user);
       Notification.success({
@@ -36,6 +36,8 @@ const user = {
             "position: absolute;width: 40px;height:40px;border-radius: 50%;border: 2px solid rgba(223,223,223,0.3);",
         }),
       });
+      removeToken()
+      console.log(getToken())
       state.token = "";
       state.user = "";
     },
@@ -51,22 +53,28 @@ const user = {
         username: username.trim(),
         password: password
       }).then(response => {
-        const { data } = response
-        setToken(data)
-        commit("SET_TOKEN", data)
-        console.log(getToken())
+        if (response.code = 200) {
+          const { data } = response
+          setToken(data)
+          commit("SET_TOKEN", data)
+          console.log(getToken())
+        } else {
+          Notification.error({
+            message: `登录失败`,
+            description: `用户名或密码错误`,
+          });
+        }
       })
     },
-    async userInfo({ commit }) {
-      await http.get("/api/admin/user/getUserInfo").then(response => {
+    userInfo({ commit }) {
+      http.get("/api/admin/user/getUserInfo").then(response => {
         const { data } = response
         commit("userInfo", data);
       });
     },
-    async logOut({ commit }) {
-      await http.post("/api/logout").then(() => {
-        commit("logOut");
-      });
+    async logout({ commit }) {
+      commit("logout");
+      await http.post("/api/logout");
     },
   },
 };

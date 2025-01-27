@@ -51,11 +51,11 @@ instance.interceptors.response.use(function(response) {
     function(error) {
         // 对响应错误做点什么
         console.log(error)
-        switch (error.response.data.status) {
+        switch (error.response.status) {
             case 400:
                 Notification.warning({
                     message: '错误提示',
-                    description: error.response.data.message,
+                    description: error.response.data.msg,
                     onClose() {
                         store.commit('showLogin')
                     }
@@ -64,13 +64,13 @@ instance.interceptors.response.use(function(response) {
             case 401:
                 Notification.warning({
                     message: '请求参数有误',
-                    description: error.response.data.message,
+                    description: error.response.data.msg,
                 });
                 break;
             case 403:
                 Notification.warning({
                     message: '用户权限提示',
-                    description: error.response.data.message,
+                    description: error.response.data.msg,
                     onClose() {
                         store.commit('showLogin')
                     },
@@ -79,16 +79,16 @@ instance.interceptors.response.use(function(response) {
             case 404:
                 Notification.warning({
                     message: '访问路径不正确',
-                    description: error.response.data.message,
+                    description: error.response.data.msg,
                 });
                 break;
             case 422:
                 Notification.warning({
                     message: '温馨提示',
-                    description: error.response.data.message,
+                    description: error.response.data.msg,
                     iconClass: 'el-icon-warning-outline',
                     onClose() {
-                        store.dispatch("logOut")
+                        store.dispatch("logout")
                         store.commit('showLogin')
                     },
                 });
@@ -96,7 +96,7 @@ instance.interceptors.response.use(function(response) {
             case 429:
                 Notification.warning({
                     message: '温馨提示',
-                    description: error.response.data.message,
+                    description: error.response.data.msg,
                 });
                 break;
             case 500:
@@ -108,7 +108,7 @@ instance.interceptors.response.use(function(response) {
             default:
                 Notification.error({
                     message: '错误提示 ' + error.response.status,
-                    description: error.response.data.message,
+                    description: error.response.data.msg,
                 });
 
         }

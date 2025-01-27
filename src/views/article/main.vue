@@ -77,12 +77,15 @@
       <div class="right">
         <div class="info concise">
           <img
-            src="https://media.fgo.wiki/thumb/f/f9/%E7%8E%89%E8%97%BB%E5%89%8D%E6%84%9A%E4%BA%BA%E8%8A%82%E7%AB%8B%E7%BB%98.png/424px-%E7%8E%89%E8%97%BB%E5%89%8D%E6%84%9A%E4%BA%BA%E8%8A%82%E7%AB%8B%E7%BB%98.png"
-            class="avatar"
-          />
-          <p class="name">青松</p>
+          :src="
+              userInfo
+                ? userInfo.avatar
+                : 'https://media.fgo.wiki/thumb/f/f9/%E7%8E%89%E8%97%BB%E5%89%8D%E6%84%9A%E4%BA%BA%E8%8A%82%E7%AB%8B%E7%BB%98.png/424px-%E7%8E%89%E8%97%BB%E5%89%8D%E6%84%9A%E4%BA%BA%E8%8A%82%E7%AB%8B%E7%BB%98.png'
+            "
+            class="avatar">
+          <p class="name">{{ userInfo ? userInfo.nickname : '青松' }}</p>
           <div class="about">
-            <span class="btn quant"> 文章{{ count }}</span>
+            <span class="btn quant"> 文章{{ userInfo ? userInfo.articleCount : count }}</span>
             <!-- <DropDown>
               <span class="btn me"> 关注我 </span>
               <template #menu>
@@ -179,11 +182,12 @@ import {
   getLabelList,
   getBlogInfo,
 } from "./article.js";
-import { watch, ref } from "vue";
+import { computed, watch, ref } from "vue";
 import { useRoute } from "vue-router";
 import Skeleton from "@/components/skeleton/skeleton";
 import utils from "@/components/utils";
 import logoSvg from '../../assets/logo.svg'
+import { useStore } from "vuex";
 export default {
   name: "Blog",
   components: {
@@ -213,7 +217,6 @@ export default {
     } = getArticleList();
     const { classList, classLoading } = getClasList();
     const { labelList, labelLoading } = getLabelList();
-    // const { count } = getBlogInfo();
     const route = useRoute();
     const name = route.name;
     getBlog();
@@ -236,11 +239,15 @@ export default {
         }
       }
     );
+    const store = useStore();
+    const userInfo = computed(() => store.state.user.user);
+    console.log(userInfo.value)
     return {
       logoSvg,
       list,
       activeList,
       getBlogTo,
+      userInfo,
       loading,
       classLoading,
       labelLoading,
