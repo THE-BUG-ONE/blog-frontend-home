@@ -73,8 +73,8 @@ const user = {
       });
     },
     async logout({ commit }) {
-      commit("logout");
       await http.post("/api/logout");
+      commit("logout");
     },
   },
 };

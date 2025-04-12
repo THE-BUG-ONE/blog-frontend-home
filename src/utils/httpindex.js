@@ -51,7 +51,7 @@ instance.interceptors.response.use(function(response) {
     function(error) {
         // 对响应错误做点什么
         console.log(error)
-        switch (error.response.status) {
+        switch (error.response.code) {
             case 400:
                 Notification.warning({
                     message: '错误提示',

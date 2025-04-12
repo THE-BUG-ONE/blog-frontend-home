@@ -22,8 +22,6 @@ function getMessList(id) {
                 .then((res) => {
                     loading.value = false
                     list.value = list.value.concat(res.data.recordList)
-                    current_page.value = res.data.current_page
-                    last_page.value = res.data.last_page
                     console.log(current_page.value, last_page.value)
                     console.log(list.value)
                 })

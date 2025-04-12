@@ -48,7 +48,7 @@
                   ><TagOutlined />{{ vlave }}</router-link
                 >
               </div>
-              <div class="info-data">
+              <!-- <div class="info-data">
                 <router-link :to="'/blog/' + item.id"
                   ><SketchOutlined />{{ item.clicks }}</router-link
                 >
@@ -58,7 +58,7 @@
                 <router-link :to="'/blog/' + item.id"
                   ><MessageOutlined />{{ item.message_count }}</router-link
                 >
-              </div>
+              </div> -->
             </div>
           </router-link>
         </div>

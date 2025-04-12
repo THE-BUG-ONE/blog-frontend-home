@@ -34,16 +34,6 @@ const routes = [{
         }
     },
     {
-        path: '/link',
-        name: 'Link',
-        component: () =>
-            import ('../views/friends/main.vue'),
-        meta: {
-            keepAlive: true, // 需要被缓存
-            title: '友链-' + name,
-        }
-    },
-    {
         path: '/message',
         name: 'Message',
         component: () =>

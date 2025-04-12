@@ -47,6 +47,7 @@ export default {
       const left = [];
       const right = [];
       const messageList = ref(list.value.filter(message => message.rootId === 0))
+      console.log(messageList.value)
       for (let i = 0, leng = messageList.value.length; i < leng; i++) {
         if ((i + 1) % 2) {
           left.push(messageList.value[i]);
@@ -62,6 +63,7 @@ export default {
     getMess();
     const getReplyList = (id) => {
       const replyList = ref(list.value.filter(message => message.rootId === id))
+      console.log(replyList.value,id)
       return replyList
     }
     const submit=(content)=>{

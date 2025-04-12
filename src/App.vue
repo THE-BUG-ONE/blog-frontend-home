@@ -6,9 +6,6 @@
       :section="section"
       :style="nav"
     >
-      <template #logo>
-        <span class="logo"></span>
-      </template>
       <template #footer>
         <DropDown class="user">
           <Image
@@ -18,12 +15,6 @@
                 : 'https://media.fgo.wiki/thumb/f/f9/%E7%8E%89%E8%97%BB%E5%89%8D%E6%84%9A%E4%BA%BA%E8%8A%82%E7%AB%8B%E7%BB%98.png/424px-%E7%8E%89%E8%97%BB%E5%89%8D%E6%84%9A%E4%BA%BA%E8%8A%82%E7%AB%8B%E7%BB%98.png'
             "
             class="avatar">
-            
-              <template #placeholder>
-                <img style="width: 100%;height: 100%;" src="https://bit-images.bj.bcebos.com/bit-new/file/20210323/4inn.png"/>
-              </template><template #error>
-                <img style="width: 100%;height: 100%;" src="https://bit-images.bj.bcebos.com/bit-new/file/20210323/b72d.png"/>
-              </template>
           </Image>
           <template #menu>
             <span class="user-opera" v-if="!user" @click="login"> 登录</span>
@@ -138,11 +129,6 @@ export default {
         link: "/article",
         key: "article",
       },
-      {
-        title: "友链",
-        link: "/link",
-        key: "link",
-      },
       // {
       //   title: "个人圈",
       //   link: "/circle",
@@ -172,22 +158,22 @@ export default {
     const userInfo = computed(() => store.state.user.user);
     console.log(userInfo.value)
     const userOperation =[
-        {
-          tag: "个人信息",
-          link: "/user/info",
-        },
-        {
-          tag: "我的留言",
-          link: "/user/message",
-        },
+        // {
+        //   tag: "个人信息",
+        //   link: "/user/info",
+        // },
+        // {
+        //   tag: "我的留言",
+        //   link: "/user/message",
+        // },
         // {
         //   tag: "发表文章",
         //   link: "/user/add",
         // },
-        {
-          tag: "系统消息",
-          link: "/user/sysmess",
-        },
+        // {
+        //   tag: "系统消息",
+        //   link: "/user/sysmess",
+        // },
         // {
         // id:'5',
         // tag:'退出登录',

@@ -125,7 +125,6 @@ export default {
       return re;
     };
     const format = (content) => {
-      console.log(content);
       return content.replace(/#(.){0,8}?;/gi, emotion);
     };
     const reply = (cont, id, fromId) => {
